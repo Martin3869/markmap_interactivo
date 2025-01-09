@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- 
+        Metaetiquetas básicas para definir el conjunto de caracteres y la vista en dispositivos móviles.
+        - charset: Define la codificación de caracteres como UTF-8.
+        - viewport: Asegura que la página se escale correctamente en diferentes dispositivos.
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 
+        Título de la página que aparece en la pestaña del navegador.
+        En este caso, indica la ubicación de la propiedad.
+    -->
+    <title>Propiedad - Av. Néstor Kirchner 3297</title>
+    
+    <!-- 
+        Inclusión de librerías externas necesarias para funcionalidades avanzadas.
+        - jQuery: Biblioteca de JavaScript que simplifica la manipulación del DOM y eventos.
+        - Leaflet: Biblioteca para crear mapas interactivos.
+    -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.css" />
+    
+    <!-- 
+        Estilos generales para el documento.
+        - Ajusta márgenes y espaciado de los párrafos.
+        - Define estilos para otros elementos como encabezados, contenedores, botones, etc.
+    -->
+    <style>
+   
+       /* 
+        Estilos para el cuerpo de la página.
+        - Define la fuente, elimina márgenes y paddings predeterminados.
+        - Establece colores de fondo y texto.
+    */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e6f2ff; /* Fondo azul claro */
+        color: #003366; /* Texto azul oscuro */
+    }
+    
+    /* 
+        Estilos para el encabezado de la página.
+        - Fondo azul oscuro con texto blanco.
+        - Centra el texto y añade padding.
+    */
+    .header {
+        background-color: #003366;
+        color: white;
+        text-align: center;
+        padding: 30px 20px;
+    }
+    
+    /* 
+        Estilos específicos para el título dentro del encabezado.
+        - Elimina márgenes, aumenta el tamaño de fuente y lo hace negrita.
+    */
+    .header h1 {
+        margin: 0;
+        font-size: 2.8em;
+        font-weight: bold;
+    }
+    
+    /* 
+        Estilos para el contenedor principal de contenido.
+        - Fondo blanco con margen y padding para separar del resto.
+        - Bordes redondeados y sombra para efecto de elevación.
+        - Limita el ancho máximo para mejor legibilidad.
+    */
+    .container {
+        background-color: white;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+    }
+    
+    /* 
+        Estilos para los párrafos dentro de los detalles de la propiedad.
+        - Aumenta ligeramente el margen inferior para mejor separación.
+        - Asegura el espacio entre líneas.
+    */
+    .property-details p, p {
+    margin-bottom: 4px;
+    line-height: 1.3;
+    }
+    /* 
+        Estilos para el contenedor del mapa.
+        - Define la altura y el ancho completo del contenedor.
+        - Bordes redondeados y margen superior.
+    */
+    #map {
+        height: 450px;
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+    
+    /* 
+        Estilos para los títulos de sección.
+        - Aumenta el tamaño de fuente, añade margen inferior y colorea el texto.
+        - Hace que el texto sea negrita.
+    */
+    .section-title {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: #003366;
+        font-weight: bold;
+    }
+    
+    /* 
+        Estilos para la sección de ventajas.
+        - Añade margen superior y padding interno.
+        - Fondo azul claro con bordes redondeados.
+    */
+    .advantages {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #cce6ff;
+        border-radius: 10px;
+    }
+    
+    /* 
+        Estilos para las listas dentro de las ventajas.
+        - Añade padding a la izquierda para la indentación.
+    */
+    .advantages ul {
+        padding-left: 20px;
+    }
+    
+    /* 
+        Estilos para cada ítem de la lista de ventajas.
+        - Añade margen inferior para separación entre ítems.
+    */
+    .advantages ul li {
+        margin-bottom: 3px;
+    }
+    
+    /* 
+        Estilos para el Menú de Ayuda con Preguntas Predefinidas.
+        - Similar a la sección de ventajas con margen, padding y fondo azul claro.
+    */
+    .help-menu {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #cce6ff;
+        border-radius: 10px;
+    }
+    
+    /* 
+        Estilos para las etiquetas dentro del Menú de Ayuda.
+        - Hace el texto en negrita y añade margen a la derecha.
+    */
+    .help-menu label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    
+    /* 
+        Estilos para el select de preguntas.
+        - Define el ancho, tamaño de fuente y padding.
+    */
+    #preguntasSelect {
+        width: 300px;
+        font-size: 1em;
+        padding: 5px;
+    }
+    
+    /* 
+        Estilos para el botón de enviar en el Menú de Ayuda.
+        - Define tamaño de fuente, padding, margen, colores de fondo y texto.
+        - Bordes redondeados y cursor de puntero al pasar el mouse.
+    */
+    #askSelectBtn {
+        font-size: 1em;
+        padding: 5px 10px;
+        margin-left: 10px;
+        background-color: #003366;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    /* 
+        Cambia el color de fondo del botón al pasar el mouse.
+    */
+    #askSelectBtn:hover {
+        background-color: #002244;
+    }
+    
+    /* 
+        Estilos para el área donde se muestran las respuestas.
+        - Añade margen superior, altura mínima, bordes y padding.
+    */
+    #answersArea {
+        margin-top: 15px;
+        min-height: 50px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    
+    /* 
+        Estilos para las preguntas dentro de las respuestas.
+        - Hace el texto en negrita y colorea en azul medio.
+        - Añade margen inferior.
+    */
+    .question {
+        font-weight: bold;
+        color: #006699;
+        margin-bottom: 3px;
+    }
+    
+    /* 
+        Estilos para las respuestas.
+        - Añade margen izquierdo y margen inferior.
+        - Define el color del texto.
+    */
+    .answer {
+        margin-left: 15px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    /* 
+        NUEVA SECCIÓN: Listado de palabras clave resaltadas.
+        - Define márgenes, padding, fondo azul muy claro y bordes redondeados.
+    */
+    .keywords-container {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #EAF4FF; 
+        border-radius: 10px;
+    }
+    
+    /* 
+        Estilos para el título de la sección de palabras clave.
+        - Elimina el margen superior y define el color del texto.
+    */
+    .keywords-container h3 {
+        margin-top: 0;
+        color: #003366;
+    }
+    
+    /* 
+        Estilos para cada palabra clave individual.
+        - Hace que se muestren en línea, con margen y padding.
+        - Fondo ligeramente sombreado, bordes redondeados y cursor de puntero.
+        - Añade transición para efecto al pasar el mouse.
+    */
+    .keyword-item {
+        display: inline-block;
+        margin: 5px;
+        padding: 3px 6px;
+        background-color: #DCE6F7; /* Un suave sombreado */
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    /* 
+        Cambia el fondo de la palabra clave al pasar el mouse.
+    */
+    .keyword-item:hover {
+        background-color: #B3C9F0; /* Un poquito más oscuro al pasar el mouse */
+    }
+    
+    /* 
+        Recuadro azul para la sección de contacto del administrador.
+        - Fondo azul claro, bordes redondeados, margen y padding.
+        - Limita el ancho máximo para mantener la consistencia.
+    */
+    .contact-box {
+        background-color: #cce6ff;
+        border-radius: 10px;
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 900px;
+    }
+    
+    /* 
+        Estilos para los párrafos dentro del recuadro de contacto.
+        - Añade margen superior e inferior reducido.
+    */
+    .contact-box p {
+        margin: 6px 0;
+    }
+    
+    /* 
+        Estilos para los enlaces dentro del recuadro de contacto.
+        - Define el color y elimina la subrayado.
+    */
+    .contact-box a {
+        color: #003366;
+        text-decoration: none;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        Encabezado principal de la página.
+        Contiene el título destacado de la propiedad.
+    -->
+    <div class="header">
+        <h1>Propiedad en Alquiler - Avenida Néstor Kirchner 3297 - SM de Tucumán</h1>
+    </div>
+
+    <!-- 
+        Contenedor principal que envuelve los detalles de la propiedad y otras secciones.
+    -->
+    <div class="container">
+        <!-- 
+            Sección de detalles de la propiedad.
+            Incluye descripción, ubicación, características técnicas, linderos, descripción estructural y mapa.
+        -->
+        <div class="property-details">
+            <!-- Título de la sección -->
+            <p class="section-title">Detalles de la Propiedad</p>
+            
+            <!-- Subtítulo de ubicación estratégica -->
+            <p class="section-title">Ubicación Estratégica</p>
+            <p>
+                El inmueble se encuentra emplazado en una esquina privilegiada, sobre Avenida Néstor Kirchner, una de las arterias más relevantes de San Miguel de Tucumán. 
+                Esta ubicación combina un flujo vehicular elevado con un constante tránsito peatonal, generando una exposición excepcional para cualquier tipo de actividad comercial.
+            </p>
+            <p>
+                La propiedad se beneficia de la cercanía con polos comerciales clave, como el Hipermercado Libertad, y de la conectividad proporcionada por más de 8 líneas de transporte público que transitan la avenida cada 30 minutos, en un rango horario de 6:00 a 00:00 horas. 
+                Con una capacidad estimada de 20 pasajeros por unidad, el flujo acumulado diario es de aproximadamente 7.920 personas, sumando un impacto significativo a la actividad en la zona.
+            </p>
+           
+            <!-- Subtítulo de características técnicas -->
+            <p class="section-title">Características Técnicas</p>  
+            <!-- Lista de características técnicas con negritas para resaltar -->
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li><strong>Superficie total:</strong> 200,25m²</li>
+                <li><strong>Superficie cubierta:</strong> 88.65m²</li>
+                <li><strong>Superficie descubierta:</strong> 111.60m²</li>
+                <li><strong>Precio total de la propiedad:</strong> <strong>167,706 USD</strong></li>
+            </ul>
+
+            <!-- Subtítulo de linderos -->
+            <p class="section-title">Linderos:</p>
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li><strong>Norte:</strong> Lote familias</li>
+                <li><strong>Sur:</strong> Av Néstor Kirchner</li>
+                <li><strong>Este:</strong> Lote familiar Av Nestor Kirchner</li>
+                <li><strong>Oeste:</strong> Calle pública Lidoro Quinteros</li>
+            </ul>
+
+            <!-- Subtítulo de descripción estructural -->
+            <p class="section-title">Descripción Estructural:</p>
+            <p>
+                El inmueble cuenta con una edificación sólida, a pesar de contar con una antigüedad aproximada de 45 años. 
+                La estructura se encuentra firme y en condiciones de ser adaptada para diversos usos. Su disposición incluye:
+            </p>
+            
+            <!-- Lista detallada de sectores y baño -->
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li><strong>Sector 1:</strong> 2,8m x 8m (22,40m²), con pisos de cemento alisado, mampostería pintada y una puerta metálica que conecta con calle Lídoro Quinteros.</li>
+                <li><strong>Sector 2:</strong> 6mx 5m (30,00m²), con piso de cemento rústico, sin ventanas ni puertas.</li>
+                <li><strong>Sector 3:</strong> 6m x 5,5m (33,00m²), con piso de cemento rústico, sin ventanas y con una puerta metálica que da acceso al patio.</li>
+                <li><strong>Baño:</strong> 2,5m x 1,3m = (3,25m²) Espacio funcional con equipamiento básico.</li>
+            </ul>
+            
+            <!-- Cálculo de superficies cubiertas -->
+            <p><strong>Superficies cubiertas: </strong> 22,40m² + 30,00m² + 33,00m² + 3,25m² = <strong>88,65m²</strong></p>
+            
+            <!-- Lista de superficies descubiertas -->
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li><strong>Galería Oeste:</strong> 2,8m x 1,5m = (4,20m²), habilitado como garaje con rejas metálicas de acceso.</li>
+                <li><strong>Patio central:</strong> 8m x 7,8m = (62,40m²), permiten múltiples posibilidades de uso.</li>
+                <li><strong>Galería/Cochera:</strong> 10m x 4,5m = (45,00m²). Una puerta metálica conecta con calle Lidoro Quinteros, complementando el flujo vehicular y peatonal.</li>
+            </ul>
+
+            <!-- Cálculo de superficies descubiertas -->
+            <p><strong>Superficies descubiertas:</strong> 4,20m² + 62,40m² + 45,00m² = <strong>111,60m²</strong></p>
+            
+            <!-- Cálculo total de superficies -->
+            <p><strong>Superficie total: </strong> 88,65m² + 111,60m² = <strong>200,25m²</strong></p>
+
+            <!-- Subtítulo de proyección comercial y valor estratégico -->
+            <p class="section-title">Proyección Comercial y Valor Estratégico:</p>
+            <p>
+                El entorno del inmueble, caracterizado por su alta afluencia de personas y la multiplicidad de servicios en la zona, lo convierte en una opción ideal para inversiones comerciales. 
+                Su ubicación acentúa su capacidad para transformar un pequeño emprendimiento en una pyme, aprovechando la visibilidad y accesibilidad que garantiza la avenida.
+            </p>
+
+            <!-- Subtítulo y contenedor para el mapa de la ubicación -->
+            <p class="section-title">Mapa de la Ubicación</p>
+            <!-- Instrucciones de navegación -->
+            <div class="map-instructions" style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #003366;">
+            <p style="margin: 0; color: #003366;">
+            <strong>📌 Instrucciones de navegación:</strong>
+            <br>
+            • Scroll Control para zoom
+            <br>
+            • Click para Arrastrar para mover el mapa
+            </p>
+
+            <div id="map"></div> <!-- Contenedor donde se renderiza el mapa interactivo -->
+        </div>
+
+        <!-- 
+            Sección de ventajas de la ubicación.
+            Lista de beneficios que ofrece la propiedad y su entorno.
+        -->
+        <div class="advantages">
+            <p class="section-title">Ventajas de la Ubicación</p>
+            <ul>
+                <li>Conectividad excepcional: Más de 8 líneas de transporte público transitan la avenida cada 30 minutos.</li>
+                <li>Acceso a servicios esenciales: Bancos, farmacias, supermercados y más a pocos metros.</li>
+                <li>Entorno comercial dinámico: A 20 mts del Hipermercado Libertad y otros centros de consumo.</li>
+                <li>Comodidad y seguridad: Amplio espacio para estacionamiento y maniobras.</li>
+                <li>Amplio espacio: 200,25 m² totales, con 88,65 m² cubiertos y 111,60 m² descubiertos.</li>
+                <li>Precio competitivo: 167,706 USD en venta o $485.606,93 mensuales en alquiler.</li>
+                <li>Flexibilidad de pago: Opciones de depósito, transferencia o efectivo.</li>
+                <li>Cartel publicitario dentro de la propiedad</li>
+                <li>Alta visibilidad: Flujo constante de vehículos y peatones garantiza exposición.</li>
+                <li>Accesibilidad: Ubicada en una arteria principal de San Miguel de Tucumán.</li>
+                <li>Potencial comercial: Ideal para actividades comerciales y oficinas por su ubicación estratégica.</li>
+            </ul>
+        </div>
+
+        <!-- 
+            Menú de Ayuda con Preguntas Predefinidas.
+            Permite al usuario seleccionar una pregunta y obtener una respuesta automática.
+        -->
+        <div class="help-menu">
+            <p class="section-title">Menú de Ayuda</p>
+            <label for="preguntasSelect">Selecciona una pregunta:</label>
+            <select id="preguntasSelect">
+                <option value="">-- Selecciona una pregunta --</option>                
+                <option value="ubicacion">¿Cuál es la ubicación?</option>
+                <option value="inmueble">¿Cómo es el inmueble?</option>
+                <option value="superficie total">¿Cuál es la superficie total?</option>
+                <option value="superficie cubierta">¿Cuál es la superficie cubierta?</option>
+                <option value="superficie descubierta">¿Cuál es la superficie descubierta?</option>
+                <option value="mide">¿Cuánto mide la propiedad?</option>
+                <option value="precio">¿Cuál es el precio de venta o alquiler?</option>
+                <option value="precio alquiler">¿Cuál es el precio inicial de alquiler?</option>
+                <option value="ajuste ipc">¿Cómo se ajusta el alquiler mensualmente?</option>
+                <option value="ipc negativo">¿Qué pasa si el IPC es negativo?</option>
+                <option value="lugar de pago">¿Dónde se paga el alquiler?</option>
+                <option value="tiempo de pago">¿Cuándo debe pagarse el alquiler?</option>
+                <option value="multa mora">¿Qué sucede si se paga tarde (mora)?</option>
+                <option value="desalojo">¿Cuándo procede el desalojo?</option>
+                <option value="contrato">¿Cuál es la duración del contrato?</option>
+                <option value="partes">¿Quiénes firman el contrato?</option>
+                <option value="incumplimiento">¿Qué sucede si se incumple el contrato?</option>
+                <option value="cartel publicitario">¿Qué pasa con el cartel publicitario?</option>
+                <option value="seguro">¿Se exige algún seguro?</option>
+                <option value="rescision">¿Cómo se puede rescindir el contrato?</option>
+                <option value="garante">¿Quién es el garante?</option>
+                <option value="sector cubierto">¿Cuál es el detalle de la superficie cubierta?</option>
+                <option value="sector descubierto">¿Cuál es el detalle de la superficie descubierta?</option>
+                <option value="responsabilidad">¿Quién se hace cargo de desperfectos?</option>
+                <option value="multa devolucion">¿Hay alguna multa si no se entrega a tiempo?</option>
+                <option value="modificaciones">¿Puedo hacer modificaciones en el inmueble?</option>
+                <option value="uso local">¿Qué actividad comercial se puede hacer?</option>
+                <option value="riesgos">¿Qué medidas de seguridad se requieren?</option>
+                <option value="domicilios">¿Cuáles son los domicilios de las partes?</option>
+                <!-- Puedes añadir más opciones según sea necesario -->
+            </select>
+
+            <button id="askSelectBtn">Enviar</button>
+            
+            <div id="answersArea"></div>
+        </div>
+    </div>
+
+    <!-- 
+        Segundo contenedor principal que incluye un resumen del contrato.
+        Utiliza un iframe para mostrar el contenido de otro documento HTML.
+    -->
+    <div class="container">
+        <p class="section-title">Resumen del Contrato</p>
+        
+        <!-- Instrucciones de navegación -->
+        <div class="map-instructions" style="background-color: #f0f8ff; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #003366;">
+            <p style="margin: 0; color: #003366;">
+                <strong>📌 Instrucciones de navegación:</strong>
+                <br>
+                • Click para expandir/colapsar nodos
+                <br>
+                • Click + Control para zoom
+                <br>
+                • Click + Arrastrar para mover el mapa
+            </p>
+        </div>
+    
+        <iframe 
+                src="Resumen de Contrato 2025 Av N Kirchner 3297.html" 
+                style="width:100%; height:500px; border:none;" 
+                scrolling="yes"
+                onmouseenter="this.style.pointerEvents='auto'"
+                onmouseleave="this.style.pointerEvents='auto'">
+        </iframe>
+    </div>
+
+    <!-- 
+        NUEVA SECCIÓN: Palabras clave sombreadas.
+        Permite al usuario hacer clic en palabras clave para ver respuestas relacionadas.
+    -->
+    <div class="container">
+        <div class="keywords-container">
+            <h3>Palabras Clave Disponibles (haz clic para ver respuesta):</h3>
+            <!-- Contenedor donde se listarán las palabras clave -->
+            <div id="keywordList"></div>
+            
+            <!-- 
+                Área donde se mostrarán las respuestas al hacer clic en cada palabra clave.
+            -->
+            <div id="answersAreaKeywords"></div>
+        </div>
+    </div>
+
+    <!-- 
+        Nuevo recuadro azul para Contacto del Administrador, ubicado al final de la página.
+        Proporciona información de contacto relevante.
+    -->
+    <div class="contact-box">
+        <p class="section-title">Contacto del Administrador:</p>
+        <p>Daniel Martín Contreras</p>
+        <p><a href="mailto:martin3869@hotmail.com">martin3869@hotmail.com</a></p>
+        <p><a href="https://wa.me/3813012805" target="_blank">WhatsApp: 381-3012805</a></p>
+    </div>
+
+    <!-- 
+        Script principal que contiene la lógica de la página.
+        Se coloca al final del body para asegurar que el DOM ya esté cargado.
+    -->
+    <script>
+        /***********************************************************
+         * 1. DEFINIMOS LAS PREGUNTAS Y RESPUESTAS EN UN OBJETO
+         ***********************************************************/
+        const respuestasObj = {
+            "ubicacion": "El inmueble se encuentra sobre Avenida Néstor Kirchner 3297 (esquina), en San Miguel de Tucumán, con alto flujo vehicular y peatonal.",
+            "inmueble": "El inmueble tiene 200,25 m² en total, con cuatro sectores cubiertos, un baño, un patio, una galería/cochera y un cartel publicitario en el jardín delantero.",
+            "superficie total": "La superficie total del terreno es de 200 m² (10 m de frente x 20 m de largo).",
+            "superficie cubierta": "La superficie cubierta asciende a 88,65 m², incluyendo el baño y tres sectores con pisos de cemento y techo de chapa.",
+            "superficie descubierta": "La superficie descubierta es de 111,60 m², con galería oeste, patio central y galería/cochera.",
+            "mide": "El terreno mide 200 m² en total, con 10 m de frente y 20 m de largo.",
+            "precio": "La propiedad en venta se valora en 167,706 USD. Para alquiler, el precio inicial desde enero de 2025 es $485.606,93, con ajustes mensuales según IPC.",
+            "precio alquiler": "El valor inicial del alquiler a partir de enero de 2025 es $485.606,93 mensuales, con ajuste mensual según el IPC.",
+            "ajuste ipc": "El alquiler se ajusta mensualmente conforme al Índice de Precios al Consumidor (IPC) del INDEC.",
+            "ipc negativo": "Si el IPC diera negativo, el monto del alquiler no disminuye: se mantiene estable hasta que el índice sea positivo.",
+            "lugar de pago": "El alquiler puede abonarse por depósito o transferencia (CBU: 0110481730048171027601, alias: Elba.Nac) o en efectivo con 10 días de aviso.",
+            "tiempo de pago": "El alquiler se paga entre los días 1 y 10 de cada mes, sin importar si son días hábiles o inhábiles.",
+            "multa mora": "Pasada la fecha de pago, la LOCATARIA incurre en mora automática con intereses según la tasa activa del Banco Nación o BCRA.",
+            "desalojo": "Si hay dos meses impagos consecutivos o se incumplen cláusulas, la LOCADORA puede rescindir y solicitar desalojo, tras 15 días para subsanar.",
+            "contrato": "El contrato de locación inicia el 01/01/2025 y finaliza el 31/12/2028 (36 meses). Ajuste mensual según IPC.",
+            "partes": "Locadora: Elba del Valle Monteiro. Locataria: Andrea Viviana Schammas de Gill. Garante: Jorge Eduardo Schammas.",
+            "incumplimiento": "Faltar al pago de 2 meses seguidos o violar cláusulas habilita a la LOCADORA a rescindir, tras 15 días de aviso.",
+            "cartel publicitario": "La LOCATARIA tiene uso exclusivo del cartel en el jardín delantero. No puede cederlo a terceros sin autorización. Gastos a su cargo.",
+            "seguro": "La LOCATARIA debe contratar un seguro obligatorio (incendios/daños) por al menos $33.000.000 y mantenerlo vigente.",
+            "rescision": "La LOCATARIA puede rescindir tras 6 meses con 60 días de aviso. Paga indemnización si es en el 2.º año (1,5 meses) o después (1 mes).",
+            "garante": "Jorge Eduardo Schammas es fiador solidario e ilimitado; no puede transferir su inmueble sin liberar la garantía.",
+            "sector cubierto": "La parte cubierta (88,65 m²) incluye un baño (3,25 m²) y tres sectores (22,40 m², 30,00 m², 33,00 m²).",
+            "sector descubierto": "La parte descubierta (111,60 m²) consta de galería oeste (4,20 m²), patio central (62,40 m²) y galería/cochera (45,00 m²).",
+            "responsabilidad": "La LOCATARIA se ocupa de desperfectos menores. La LOCADORA repara desperfectos mayores en un máximo de 10 días hábiles.",
+            "multa devolucion": "Si la LOCATARIA no entrega al final del contrato, pagará el 100% del alquiler por cada mes o fracción de demora.",
+            "modificaciones": "Cualquier obra requiere autorización de la LOCADORA y pasa a formar parte del inmueble.",
+            "uso local": "El inmueble se destina a la venta de envases plásticos descartables, sin cambios de giro sin autorización.",
+            "riesgos": "Por almacenar plásticos (inflamables), se exigen matafuegos y un seguro mínimo de $33.000.000.",
+            "domicilios": "LOCADORA: Lídoro Quinteros 880 Casa 1. LOCATARIA: Bolívar 180. Cambios con 15 días de anticipación.",
+            "otros": "Lo siento, no encontré información sobre eso."
+        };
+
+        /***********************************************************
+         * 2. INICIALIZACIÓN DEL MAPA LEAFLET (con OpenStreetMap)
+         ***********************************************************/
+        // Crea un mapa centrado en las coordenadas especificadas con un nivel de zoom de 15
+
+        const map = L.map('map').setView([-26.83457131539304, -65.25046977316624], 15);
+
+        // Añade capas de OpenStreetMap al mapa
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19 // Define el nivel máximo de zoom
+        }).addTo(map);
+
+        // Agrega un marcador en la ubicación de la propiedad con un popup que se abre automáticamente
+        L.marker([-26.83457131539304, -65.25046977316624]).addTo(map)
+            .bindPopup('Av. Néstor Kirchner 3297') // Texto del popup
+            .openPopup(); // Abre el popup al cargar el mapa
+
+        /***********************************************************
+         * 3. FUNCIONALIDAD DEL MENÚ DE AYUDA (PREGUNTAS PREDEFINIDAS)
+         ***********************************************************/
+        // Obtiene referencias a los elementos del DOM
+        const preguntasSelect = document.getElementById('preguntasSelect'); // Select de preguntas
+        const askSelectBtn = document.getElementById('askSelectBtn'); // Botón de enviar
+        const answersArea = document.getElementById('answersArea'); // Área para mostrar respuestas
+
+        // Añade un evento al botón de enviar
+        askSelectBtn.addEventListener('click', () => {
+            const claveSeleccionada = preguntasSelect.value; // Obtiene el valor seleccionado
+            if (!claveSeleccionada) { // Verifica si se seleccionó una pregunta
+                alert("Por favor, selecciona una pregunta del menú."); // Muestra alerta si no hay selección
+                return;
+            }
+            const respuesta = respuestasObj[claveSeleccionada] || respuestasObj["otros"]; // Obtiene la respuesta correspondiente
+            const preguntaTexto = preguntasSelect.options[preguntasSelect.selectedIndex].text; // Obtiene el texto de la pregunta
+
+            // Añade la pregunta y respuesta al área de respuestas
+            answersArea.innerHTML += `
+                <div class="question">Pregunta: ${preguntaTexto}</div>
+                <div class="answer">Respuesta: ${respuesta}</div>
+            `;
+        });
+
+        /***********************************************************
+         * 4. LISTADO DE PALABRAS CLAVE “SOMBREADAS”
+         ***********************************************************/
+        const keywordList = document.getElementById('keywordList'); // Contenedor para las palabras clave
+
+        // Itera sobre cada clave en el objeto de respuestas
+        for (let clave in respuestasObj) {
+            if (clave === 'otros') continue; // Omite la clave 'otros'
+            const span = document.createElement('span'); // Crea un elemento span
+            span.classList.add('keyword-item'); // Añade la clase para estilos
+            span.textContent = clave; // Establece el texto del span
+            span.title = "Haz clic para ver respuesta"; // Añade un tooltip
+
+            // Añade un evento al hacer clic en la palabra clave
+            span.addEventListener('click', () => {
+                const respuesta = respuestasObj[clave] || respuestasObj["otros"]; // Obtiene la respuesta
+                const answersAreaK = document.getElementById('answersAreaKeywords'); // Área para mostrar respuestas
+                answersAreaK.innerHTML += `
+                    <div class="question">Pregunta: ${clave}</div>
+                    <div class="answer">Respuesta: ${respuesta}</div>
+                `;
+            });
+
+            keywordList.appendChild(span); // Añade el span al contenedor de palabras clave
+        }
+    </script>
+</body>
+</html>
