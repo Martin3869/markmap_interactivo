@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA con Servidor Intermedio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .response {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>IA con Servidor Intermedio</h2>
+        <input type="text" id="question" placeholder="Escribe tu pregunta aquí...">
+        <button id="ask">Preguntar</button>
+        <div id="response" class="response">Aquí aparecerá la respuesta.</div>
+    </div>
+
+    <script>
+        document.getElementById("ask").addEventListener("click", async () => {
+            const question = document.getElementById("question").value;
+            if (!question) {
+                alert("Por favor, escribe una pregunta.");
+                return;
+            }
+
+            const responseDiv = document.getElementById("response");
+            responseDiv.innerHTML = "Procesando tu pregunta...";
+
+            try {
+                const response = await fetch('http://localhost:3000/api/openai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: question }),
+                });
+
+                const data = await response.json();
+                responseDiv.innerHTML = data.choices[0]?.text || "No se pudo obtener una respuesta.";
+            } catch (error) {
+                console.error("Error:", error);
+                responseDiv.innerHTML = "Ocurrió un error al procesar la solicitud.";
+            }
+        });
+    </script>
+</body>
+</html>

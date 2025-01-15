@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Árbol Genealógico</title>
+  <style>
+    /* Estilos generales en tonos azules */
+    body {
+      background-color: #e6f0ff;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+    /* Contenedor principal con borde redondeado y posición relativa para el SVG */
+    .maco {
+      position: relative;
+      border: 2px solid #4a90e2;
+      border-radius: 15px;
+      padding: 20px;
+      background-color: #ffffff;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #4a90e2;
+      margin-bottom: 20px;
+    }
+    /* Cada sección principal del árbol */
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      color: #4a90e2;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* Sub-secciones (dentro de la sección PATERNO o MATERNO) */
+    .subsection {
+      margin-bottom: 20px;
+    }
+    .subsection h3 {
+      color: #357ABD;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    /* Contenedor de módulos (personas) usando Flexbox */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+    }
+    /* Módulo individual para cada persona */
+    .module {
+      border: 1px solid #4a90e2;
+      border-radius: 10px;
+      margin: 8px;
+      padding: 10px;
+      width: 260px;
+      box-sizing: border-box;
+      text-align: center;
+      position: relative;
+      background-color: #f0f8ff; /* Valor por defecto si no se sobreescribe */
+    }
+    /* Título (parentezco) en negritas */
+    .module-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #357ABD;
+    }
+    /* Etiqueta opcional para familia */
+    .family {
+      font-style: italic;
+      font-size: 12px;
+      color: #555;
+    }
+    /* Nuevas clases para asignar tonos diferentes a cada familia */
+    .fa-contreras-arancibia { background-color: #d0e7ff; }
+    .fa-miranda-castro    { background-color: #e0f7fa; }
+    .fa-contreras-miranda { background-color: #e8f5e9; }
+    .fa-monteiro-pereyra  { background-color: #fff3e0; }
+    .fa-perez-brito       { background-color: #fce4ec; }
+    .fa-monteiro-perez    { background-color: #ede7f6; }
+
+    /* El SVG se posiciona de forma absoluta para dibujar líneas */
+    #connector-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+  </style>
+</head>
+<body>
+  <div class="maco">
+    <h1>Árbol Genealógico</h1>
+    <!-- Contenedor SVG para las líneas de pareja -->
+    <svg id="connector-svg"></svg>
+
+    <!-- SECCIÓN PATERNO -->
+    <div class="section">
+      <h2>PATERNO</h2>
+      
+      <!-- Sub-sección: Bisabuelos Paternos -->
+      <div class="subsection">
+        <h3>Bisabuelos Paternos</h3>
+        <div class="row" id="bisabuelos_p_row">
+          <!-- Familia Contreras Arancibia -->
+          <div class="module fa-contreras-arancibia" id="bisabuelo_p1">
+            <div class="module-title">Bis Abuelo</div>
+            Jose Lucio Contreras<br>
+            <span class="family">Familia Contreras Arancibia</span>
+          </div>
+          <div class="module fa-contreras-arancibia" id="bisabuela_p1">
+            <div class="module-title">Bis Abuela</div>
+            Bersabe del Carmen Arancibia<br>
+            <span class="family">Familia Contreras Arancibia</span>
+          </div>
+          <!-- Familia Miranda Castro -->
+          <div class="module fa-miranda-castro" id="bisabuelo_p2">
+            <div class="module-title">Bis Abuelo</div>
+            Toribio Eduardo Miranda<br>
+            <span class="family">Familia Miranda Castro</span>
+          </div>
+          <div class="module fa-miranda-castro" id="bisabuela_p2">
+            <div class="module-title">Bis Abuela</div>
+            Maria Castro<br>
+            <span class="family">Familia Miranda Castro</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sub-sección: Abuelos Paternos -->
+      <div class="subsection">
+        <h3>Abuelos Paternos</h3>
+        <div class="row" id="abuelos_p_row">
+          <!-- Familia Contreras Miranda -->
+          <div class="module fa-contreras-miranda" id="abuelo_p">
+            <div class="module-title">Abuelo</div>
+            Francisco Emilio Contreras<br>
+            DNI: 3.593.837<br>
+            Nacimiento: 1/7/1901<br>
+            <span class="family">Familia Contreras Miranda</span>
+          </div>
+          <div class="module fa-contreras-miranda" id="abuela_p">
+            <div class="module-title">Abuela</div>
+            Maria Zulema Miranda<br>
+            DNI: N/D<br>
+            <span class="family">Familia Contreras Miranda</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN MATERNO -->
+    <div class="section">
+      <h2>MATERNO</h2>
+      
+      <!-- Sub-sección: Bisabuelos Maternos -->
+      <div class="subsection">
+        <h3>Bisabuelos Maternos</h3>
+        <div class="row" id="bisabuelos_m_row">
+          <!-- Familia Monteiro Pereyra Nieves -->
+          <div class="module fa-monteiro-pereyra" id="bisabuelo_m1">
+            <div class="module-title">Bis Abuelo</div>
+            Domingo Monteiro<br>
+            <span class="family">Familia Monteiro Pereyra Nieves</span>
+          </div>
+          <div class="module fa-monteiro-pereyra" id="bisabuela_m1">
+            <div class="module-title">Bis Abuela</div>
+            Antonia Pereyra Nieves<br>
+            <span class="family">Familia Monteiro Pereyra Nieves</span>
+          </div>
+          <!-- Familia Perez Brito -->
+          <div class="module fa-perez-brito" id="bisabuelo_m2">
+            <div class="module-title">Bis Abuelo</div>
+            Gregorio Perez<br>
+            <span class="family">Familia Perez Brito</span>
+          </div>
+          <div class="module fa-perez-brito" id="bisabuela_m2">
+            <div class="module-title">Bis Abuela</div>
+            Transito Brito<br>
+            <span class="family">Familia Perez Brito</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sub-sección: Abuelos Maternos -->
+      <div class="subsection">
+        <h3>Abuelos Maternos</h3>
+        <div class="row" id="abuelos_m_row">
+          <!-- Familia Monteiro Perez -->
+          <div class="module fa-monteiro-perez" id="abuelo_m">
+            <div class="module-title">Abuelo</div>
+            Jose Monteiro<br>
+            DNI: 7.062.126<br>
+            Nacimiento: 19/1/1911<br>
+            <span class="family">Familia Monteiro Perez</span>
+          </div>
+          <div class="module fa-monteiro-perez" id="abuela_m">
+            <div class="module-title">Abuela</div>
+            Maria Luisa Perez<br>
+            DNI: 8.966.970<br>
+            Nacimiento: 25/10/1907<br>
+            <span class="family">Familia Monteiro Perez</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5: Tíos Paternos -->
+    <div class="section">
+      <h2>Tíos Paternos</h2>
+      <div class="row" id="tios_row">
+        <div class="module" id="tio1">
+          <div class="module-title">Tío</div>
+          Jose Eduardo Contreras<br>
+          DNI: 7.069.473<br>
+          Nacimiento: 11/10/1937
+        </div>
+        <div class="module" id="tio2">
+          <div class="module-title">Tío</div>
+          Francisco Emilio Contreras<br>
+          DNI: 7.079.209<br>
+          Nacimiento: 22/3/1940
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 6: Padres y Hermanos -->
+    <div class="section">
+      <h2>Padres y Hermanos</h2>
+      
+      <!-- Sub-sección: Padres -->
+      <div class="subsection">
+        <h3>Padres</h3>
+        <div class="row" id="parents_row">
+          <div class="module" id="papa">
+            <div class="module-title">Papá</div>
+            Enrique Daniel Contreras<br>
+            Nacimiento: 9/4/1942
+          </div>
+          <div class="module" id="mama">
+            <div class="module-title">Mamá</div>
+            Elba del valle Monteiro<br>
+            Nacimiento: 29/12/1946
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sub-sección: Hijos -->
+      <div class="subsection">
+        <h3>Hijos</h3>
+        <div class="row" id="children_row">
+          <div class="module" id="yo">
+            <div class="module-title">Yo</div>
+            Daniel Martin Contreras<br>
+            Nacimiento: 3/8/1969
+          </div>
+          <div class="module" id="hermano1">
+            <div class="module-title">Hermano</div>
+            Gustavo Enrique Contreras<br>
+            Nacimiento: 10/3/1972
+          </div>
+          <div class="module" id="hermana">
+            <div class="module-title">Hermana</div>
+            Lia Mariana de Jesus Contreras
+            Nacimiento: 13/4/1920
+          </div>
+          <div class="module" id="hermano2">
+            <div class="module-title">Hermano</div>
+            Jose Emilio Roque Contreras<br>
+            Nacimiento: 8/11/1983
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Función para dibujar una línea entre dos módulos (desde el centro de un módulo al centro del otro)
+    function drawLine(id1, id2, color = "#4a90e2") {
+      var el1 = document.getElementById(id1);
+      var el2 = document.getElementById(id2);
+      if (el1 && el2) {
+        var rect1 = el1.getBoundingClientRect();
+        var rect2 = el2.getBoundingClientRect();
+        var containerRect = document.querySelector('.maco').getBoundingClientRect();
+        var x1 = rect1.left - containerRect.left + rect1.width / 2;
+        var y1 = rect1.top - containerRect.top + rect1.height / 2;
+        var x2 = rect2.left - containerRect.left + rect2.width / 2;
+        var y2 = rect2.top - containerRect.top + rect2.height / 2;
+        var svg = document.getElementById('connector-svg');
+        var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("stroke", color);
+        line.setAttribute("stroke-width", "2");
+        svg.appendChild(line);
+      }
+    }
+
+    // Dibujar las conexiones de pareja cuando el DOM esté listo
+    document.addEventListener("DOMContentLoaded", function() {
+      // Conexiones de parejas (dentro de la misma generación)
+      // Bisabuelos Paternos
+      drawLine("bisabuelo_p1", "bisabuela_p1");
+      drawLine("bisabuelo_p2", "bisabuela_p2");
+      // Bisabuelos Maternos
+      drawLine("bisabuelo_m1", "bisabuela_m1");
+      drawLine("bisabuelo_m2", "bisabuela_m2");
+      // Abuelos
+      drawLine("abuelo_p", "abuela_p");
+      drawLine("abuelo_m", "abuela_m");
+      // Padres
+      drawLine("papa", "mama");
+    });
+  </script>
+</body>
+</html>
